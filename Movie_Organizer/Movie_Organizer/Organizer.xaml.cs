@@ -121,7 +121,13 @@ namespace Movie_Organizer
             SearchMovie movie = (SearchMovie)border.Tag;
             MessageBox.Show(movie.Title);
             WebClient webclient = new WebClient();
+
+            Directory.Move(Movie.DirectoryPath, System.IO.Path.GetDirectoryName(Movie.DirectoryPath) + "\\ " + movie.Title);
+
+            Movie.DirectoryPath = System.IO.Path.GetDirectoryName(Movie.DirectoryPath) + "\\ " + movie.Title;
+
             webclient.DownloadFile("https://image.tmdb.org/t/p/w300_and_h450_bestv2" + movie.PosterPath, Movie.DirectoryPath + "\\Cover.jpg");
+            File.Create(Movie.DirectoryPath + "\\Kodi");
             this.Close();
         }
     }

@@ -71,70 +71,43 @@ namespace Movie_Organizer
 
             foreach (string dir in Directory.GetDirectories(Settings.MoviePath))
             {
-                string name = System.IO.Path.GetFileName(dir).ToLower();
-                Console.WriteLine(name);
-
-                string searchquery = "";
-                foreach (char c in name)
+                string[] files = Directory.GetFiles(dir);
+                bool organized = false;
+                foreach(string file in files)
                 {
-                    char charachter = c;
-                    if (char.IsLetter(c) || c == ' ' || c == '.')
-                    {
-                        if (c == '.') charachter = ' ';
-                        searchquery += charachter;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    if (System.IO.Path.GetFileName(file) == "Kodi") organized = true;
                 }
 
-                this.Dispatcher.Invoke(() =>
-                {
-                    Movie movie = new Movie();
-                    movie.Title = searchquery;
-                    movie.DirectoryPath = dir;
-                    Organizer organizer = new Organizer(movie);
-                    organizer.ShowDialog();
-                });
-                //Console.WriteLine(name);
-                /*foreach (string file in Directory.GetFiles(dir))
-                {
-                    string extention = System.IO.Path.GetFileName(file);
-                    extention = extention.Replace(System.IO.Path.GetFileNameWithoutExtension(extention), string.Empty);
-                    extention = extention.Replace(".", string.Empty);
-                    if (Settings.Extentions.Contains(extention))
-                    {
-                        string name = System.IO.Path.GetFileName(file).ToLower();
-                        Console.WriteLine(name);
 
-                        string searchquery = "";
-                        foreach(char c in name)
+                if (!organized)
+                {
+                    string name = System.IO.Path.GetFileName(dir).ToLower();
+                    Console.WriteLine(name);
+
+                    string searchquery = "";
+                    foreach (char c in name)
+                    {
+                        char charachter = c;
+                        if (char.IsLetter(c) || c == ' ' || c == '.')
                         {
-                            char charachter = c;
-                            if (char.IsLetter(c) || c == ' ' || c == '.')
-                            {
-                                if (c == '.') charachter = ' ';
-                                searchquery += charachter;
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            if (c == '.') charachter = ' ';
+                            searchquery += charachter;
                         }
-
-                        this.Dispatcher.Invoke(() =>
+                        else
                         {
-                            Movie movie = new Movie();
-                            movie.Title = searchquery;
-                            movie.DirectoryPath = dir;
-                            Organizer organizer = new Organizer(movie);
-                            organizer.ShowDialog();
-                        });
-                        //Console.WriteLine(name);
+                            break;
+                        }
                     }
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Movie movie = new Movie();
+                        movie.Title = searchquery;
+                        movie.DirectoryPath = dir;
+                        Organizer organizer = new Organizer(movie);
+                        organizer.ShowDialog();
+                    });
                 }
-            }*/
             }
         }
     }
