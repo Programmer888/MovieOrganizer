@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Movie_Organizer"
         mc:Ignorable="d"
-        Title="Organizer" Height="300" Width="300">
+        Title="Organizer" Height="260" Width="780" Loaded="Window_Loaded">
+    
     <Grid>
-        
+        <WrapPanel Name="wrpSuggestions">
+            
+        </WrapPanel>
     </Grid>
 </Window>

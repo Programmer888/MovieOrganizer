@@ -18,6 +18,10 @@ namespace Movie_Organizer.classs
 
         public static string SeriePath { get; set; }
 
+        public static List<string> Exceptions { get; set; }
+
+        public static List<string> Extentions { get; set; }
+
         //public static List<string> Directorytree { get; set; }
 
 
@@ -83,5 +87,11 @@ namespace Movie_Organizer.classs
         public string MoviePath { get; set; }
 
         public string SeriePath { get; set; }
+
+        public List<string> Exceptions { get; set; }
+
+        public List<string> Extentions { get; set; }
+
+
     }
 }

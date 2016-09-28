@@ -33,11 +33,27 @@ namespace Movie_Organizer
             Settings.Read();
 
 
-            Settings.MoviePath = "GODVERDOMMME";
+            Settings.MoviePath = @"D:\Media\Movies\";
+            Settings.SeriePath = @"D:\Media\Series\";
 
+            Settings.Exceptions.Add("dutchreleaseteam");
+            Settings.Exceptions.Add("xvid");
+            Settings.Exceptions.Add("release");
+            Settings.Exceptions.Add("1080");
+            Settings.Exceptions.Add("1080p");
+            Settings.Exceptions.Add("BRRip");
+            Settings.Exceptions.Add("BDRip");
+            Settings.Exceptions.Add("x264");
+            Settings.Exceptions.Add("yify");
+            Settings.Exceptions.Add("subs");
+            Settings.Exceptions.Add("subs");
+            Settings.Exceptions.Add("subs");
+            Settings.Exceptions.Add("subs");
+            Settings.Exceptions.Add("subs");
 
-
-
+            Settings.Extentions.Add("avi");
+            Settings.Extentions.Add("mp4");
+            Settings.Extentions.Add("mkv");
 
             Settings.Write();
 
@@ -53,13 +69,72 @@ namespace Movie_Organizer
             //settings.Directorytree = new List<string>();
             //settings.Directorytree.Add("test");
 
-
-           
-
-
-            foreach (string dir in Directory.GetDirectories(@"D:\Movies\"))
+            foreach (string dir in Directory.GetDirectories(Settings.MoviePath))
             {
+                string name = System.IO.Path.GetFileName(dir).ToLower();
+                Console.WriteLine(name);
 
+                string searchquery = "";
+                foreach (char c in name)
+                {
+                    char charachter = c;
+                    if (char.IsLetter(c) || c == ' ' || c == '.')
+                    {
+                        if (c == '.') charachter = ' ';
+                        searchquery += charachter;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                this.Dispatcher.Invoke(() =>
+                {
+                    Movie movie = new Movie();
+                    movie.Title = searchquery;
+                    movie.DirectoryPath = dir;
+                    Organizer organizer = new Organizer(movie);
+                    organizer.ShowDialog();
+                });
+                //Console.WriteLine(name);
+                /*foreach (string file in Directory.GetFiles(dir))
+                {
+                    string extention = System.IO.Path.GetFileName(file);
+                    extention = extention.Replace(System.IO.Path.GetFileNameWithoutExtension(extention), string.Empty);
+                    extention = extention.Replace(".", string.Empty);
+                    if (Settings.Extentions.Contains(extention))
+                    {
+                        string name = System.IO.Path.GetFileName(file).ToLower();
+                        Console.WriteLine(name);
+
+                        string searchquery = "";
+                        foreach(char c in name)
+                        {
+                            char charachter = c;
+                            if (char.IsLetter(c) || c == ' ' || c == '.')
+                            {
+                                if (c == '.') charachter = ' ';
+                                searchquery += charachter;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Movie movie = new Movie();
+                            movie.Title = searchquery;
+                            movie.DirectoryPath = dir;
+                            Organizer organizer = new Organizer(movie);
+                            organizer.ShowDialog();
+                        });
+                        //Console.WriteLine(name);
+                    }
+                }
+            }*/
             }
         }
     }
